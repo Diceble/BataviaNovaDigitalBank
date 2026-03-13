@@ -48,13 +48,6 @@ namespace BataviaNovaDigitalBank.Pages.Login
         public async Task<IActionResult> OnGet(string? returnUrl)
         {
             await BuildModelAsync(returnUrl);
-
-            if (View.IsExternalLoginOnly)
-            {
-                // we only have one option for logging in and it's an external provider
-                return RedirectToPage("/ExternalLogin/Challenge", new { scheme = View.ExternalLoginScheme, returnUrl });
-            }
-
             return Page();
         }
 
@@ -183,32 +176,11 @@ namespace BataviaNovaDigitalBank.Pages.Login
 
                 Input.Username = context.LoginHint;
 
-                if (!local)
-                {
-                    View.ExternalProviders = new[] { new ViewModel.ExternalProvider(authenticationScheme: context.IdP) };
-                }
-
                 return;
             }
 
             var schemes = await _schemeProvider.GetAllSchemesAsync();
 
-            var providers = schemes
-                .Where(x => x.DisplayName != null)
-                .Select(x => new ViewModel.ExternalProvider
-                (
-                    authenticationScheme: x.Name,
-                    displayName: x.DisplayName ?? x.Name
-                )).ToList();
-
-            var dynamicSchemes = (await _identityProviderStore.GetAllSchemeNamesAsync())
-                .Where(x => x.Enabled)
-                .Select(x => new ViewModel.ExternalProvider
-                (
-                    authenticationScheme: x.Scheme,
-                    displayName: x.DisplayName ?? x.Scheme
-                ));
-            providers.AddRange(dynamicSchemes);
 
 
             var allowLocal = true;
@@ -216,17 +188,12 @@ namespace BataviaNovaDigitalBank.Pages.Login
             if (client != null)
             {
                 allowLocal = client.EnableLocalLogin;
-                if (client.IdentityProviderRestrictions != null && client.IdentityProviderRestrictions.Count != 0)
-                {
-                    providers = providers.Where(provider => client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
-                }
             }
 
             View = new ViewModel
             {
                 AllowRememberLogin = LoginOptions.AllowRememberLogin,
                 EnableLocalLogin = allowLocal && LoginOptions.AllowLocalLogin,
-                ExternalProviders = providers.ToArray()
             };
         }
     }
