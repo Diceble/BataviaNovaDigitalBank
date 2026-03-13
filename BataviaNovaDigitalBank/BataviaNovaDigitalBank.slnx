@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="BataviaNovaDigitalBank/BataviaNovaDigitalBank.Identity.csproj" />
+  </Folder>
+  <Folder Name="/test/" />
+</Solution>
