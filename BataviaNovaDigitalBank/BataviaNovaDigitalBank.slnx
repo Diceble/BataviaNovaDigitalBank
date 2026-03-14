@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="BataviaNovaDigitalBank.Web/BataviaNovaDigitalBank.Web.csproj" Id="597d6173-0a33-49de-8865-d37bc22252d4" />
     <Project Path="BataviaNovaDigitalBank/BataviaNovaDigitalBank.Identity.csproj" />
   </Folder>
   <Folder Name="/test/" />
