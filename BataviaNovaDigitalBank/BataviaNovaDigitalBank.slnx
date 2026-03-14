@@ -3,4 +3,7 @@
     <Project Path="BataviaNovaDigitalBank/BataviaNovaDigitalBank.Identity.csproj" />
   </Folder>
   <Folder Name="/test/" />
+  <Project Path="BataviaNoviaDigitalBank.dcproj">
+    <Build />
+  </Project>
 </Solution>

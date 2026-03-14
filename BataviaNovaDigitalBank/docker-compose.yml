@@ -1,0 +1,6 @@
+services:
+  batavianovadigitalbank.identity:
+    image: ${DOCKER_REGISTRY-}batavianovadigitalbankidentity
+    build:
+      context: .
+      dockerfile: BataviaNovaDigitalBank/Dockerfile
